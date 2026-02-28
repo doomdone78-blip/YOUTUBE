@@ -1,1 +1,44 @@
 
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YT Monetization Service</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>🚀 YT Channel Monetization</h1>
+        <p>अपना वीडियो लिंक डालें और सर्वर चुनें।</p>
+
+        <form id="monetizationForm">
+            <div class="input-group">
+                <label for="videoLink">YouTube Video Link:</label>
+                <input type="url" id="videoLink" placeholder="https://www.youtube.com/watch?v=..." required>
+            </div>
+
+            <div class="input-group">
+                <label for="serverSelect">सर्वर चुनें (1-20):</label>
+                <select id="serverSelect" required>
+                    <option value="" disabled selected>-- सर्वर चुनें --</option>
+                    </select>
+            </div>
+
+            <div class="input-group">
+                <label>प्लान चुनें:</label>
+                <div class="plan-card selected" id="demoPlan">
+                    <h3>Demo Mode</h3>
+                    <p>टेस्टिंग के लिए</p>
+                    <span class="price">₹50</span>
+                </div>
+            </div>
+
+            <button type="submit" class="pay-btn">₹50 Pay Now</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
