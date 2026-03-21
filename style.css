@@ -1,4 +1,4 @@
-// तुम्हारी 50 वैलिड एक्टिवेशन कीज़ (ये सिस्टम में सेव रहेंगी)
+// तुम्हारी 50 वैलिड एक्टिवेशन कीज़
 const validKeys = [
     "AWY-101X", "AWY-102Y", "AWY-103Z", "AWY-104A", "AWY-105B",
     "AWY-106C", "AWY-107D", "AWY-108E", "AWY-109F", "AWY-110G",
@@ -12,60 +12,69 @@ const validKeys = [
     "AWY-146Q", "AWY-147R", "AWY-148S", "AWY-149T", "AWY-150U"
 ];
 
-// YouTube URL से Video ID निकालने का फंक्शन
 function extractVideoID(url) {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
     return (match && match[2].length === 11) ? match[2] : null;
 }
 
-// वीडियो लोड करने का फंक्शन
-function loadVideo() {
-    const url = document.getElementById('youtube-url').value;
+// वीडियो का स्टेटस चेक करने वाला फंक्शन
+async function checkStatus() {
+    const url = document.getElementById('youtube-url').value.trim();
     const videoID = extractVideoID(url);
-    const videoContainer = document.getElementById('video-container');
-    const ytPlayer = document.getElementById('yt-player');
-    const statusMsg = document.getElementById('status-message');
+    
+    if (!videoID) {
+        alert("Please enter a valid YouTube link!");
+        return;
+    }
 
-    if (videoID) {
-        ytPlayer.src = `https://www.youtube.com/embed/${videoID}`;
-        videoContainer.classList.remove('hidden');
-        statusMsg.innerText = ""; // पुराना मैसेज क्लियर करें
-    } else {
-        alert("कृपया सही YouTube लिंक दर्ज करें!");
+    // वीडियो सेक्शन दिखाएं
+    document.getElementById('video-section').classList.remove('hidden');
+    document.getElementById('yt-player').src = `https://www.youtube.com/embed/${videoID}`;
+    document.getElementById('video-link-text').innerText = `Copied Link: ${url}`;
+    document.getElementById('status-message').innerText = '';
+
+    // बिना API की के वीडियो का टाइटल निकालने की कोशिश
+    try {
+        const response = await fetch(`https://noembed.com/embed?url=${url}`);
+        const data = await response.json();
+        document.getElementById('video-title').innerText = data.title || "YouTube Video Details Loaded";
+    } catch (error) {
+        document.getElementById('video-title').innerText = "YouTube Video Details Loaded";
     }
 }
 
-// एक्टिवेशन की चेक करने का फंक्शन
-function activatePromotion() {
+// एक्टिवेशन की सबमिट करने वाला फंक्शन
+function applyKey() {
     const inputKey = document.getElementById('activation-key').value.trim().toUpperCase();
     const statusMsg = document.getElementById('status-message');
     
     if (inputKey === "") {
-        alert("कृपया पहले Activation Key दर्ज करें!");
+        alert("Please enter Activation Key!");
         return;
     }
 
-    // LocalStorage से चेक करें कि क्या की पहले यूज़ हो चुकी है
+    // चेक करें कि क्या की पहले यूज़ हो चुकी है
     let usedKeys = JSON.parse(localStorage.getItem('alterweb_used_keys')) || [];
 
     if (usedKeys.includes(inputKey)) {
         statusMsg.style.color = "#ff4444";
-        statusMsg.innerText = "❌ यह Key पहले ही इस्तेमाल हो चुकी है (Expired)!";
+        statusMsg.innerText = "❌ Expired Key!";
     } 
     else if (validKeys.includes(inputKey)) {
-        // की सही है, इसे used list में डाल दो
+        // की सही है
         usedKeys.push(inputKey);
         localStorage.setItem('alterweb_used_keys', JSON.stringify(usedKeys));
         
         statusMsg.style.color = "#00C851";
-        statusMsg.innerText = "✅ Payment Successful! आपका वीडियो प्रमोशन शुरू हो गया है।";
+        // तुम्हारा कस्टमाइज़्ड मैसेज
+        statusMsg.innerText = "Congratulation! Your demo complete. Refresh YouTube after 1 to 30 days.";
         
-        // एक्टिवेट होने के बाद इनपुट बॉक्स खाली कर दें
         document.getElementById('activation-key').value = "";
     } 
     else {
         statusMsg.style.color = "#ff4444";
-        statusMsg.innerText = "❌ अमान्य Key (Invalid)! कृपया सही Key दर्ज करें।";
+        statusMsg.innerText = "❌ Invalid Key!";
     }
 }
+
