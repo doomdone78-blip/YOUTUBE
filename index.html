@@ -1,42 +1,38 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YT Monetization Service</title>
+    <title>ALTERWEB YOUTUBE - Growth Portal</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div class="container">
-        <h1>🚀 YT Channel Monetization</h1>
-        <p>अपना वीडियो लिंक डालें और सर्वर चुनें।</p>
+        <h1>ALTERWEB <span>YOUTUBE</span></h1>
+        <p class="subtitle">अपने YouTube वीडियो को प्रमोट करें</p>
 
-        <form id="monetizationForm">
-            <div class="input-group">
-                <label for="videoLink">YouTube Video Link:</label>
-                <input type="url" id="videoLink" placeholder="https://www.youtube.com/watch?v=..." required>
-            </div>
+        <div class="input-section">
+            <input type="text" id="youtube-url" placeholder="अपने YouTube वीडियो का लिंक यहाँ पेस्ट करें...">
+            <button onclick="loadVideo()" class="btn-primary">Generate</button>
+        </div>
 
-            <div class="input-group">
-                <label for="serverSelect">सर्वर चुनें (1-20):</label>
-                <select id="serverSelect" required>
-                    <option value="" disabled selected>-- सर्वर चुनें --</option>
-                    </select>
-            </div>
+        <div id="video-container" class="hidden">
+            <iframe id="yt-player" width="100%" height="315" src="" frameborder="0" allowfullscreen></iframe>
+            
+            <div class="activation-section">
+                <h3>प्रीमियम प्रमोशन एक्टिवेट करें (Demo Price: ₹50)</h3>
+                
+                <a href="https://wa.me/91YOURNUMBERHERE?text=Hi,%20I%20want%20to%20buy%20an%20activation%20key%20for%20Alterweb%20YouTube." target="_blank" class="btn-whatsapp">
+                    WhatsApp से Activation Key लें
+                </a>
 
-            <div class="input-group">
-                <label>प्लान चुनें:</label>
-                <div class="plan-card selected" id="demoPlan">
-                    <h3>Demo Mode</h3>
-                    <p>टेस्टिंग के लिए</p>
-                    <span class="price">₹50</span>
+                <div class="key-input-box">
+                    <input type="text" id="activation-key" placeholder="Activation Key दर्ज करें...">
+                    <button onclick="activatePromotion()" class="btn-success">Activate</button>
                 </div>
+                <p id="status-message"></p>
             </div>
-
-            <button type="submit" class="pay-btn">₹50 Pay Now</button>
-        </form>
+        </div>
     </div>
 
     <script src="script.js"></script>
