@@ -1,140 +1,71 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+// तुम्हारी 50 वैलिड एक्टिवेशन कीज़ (ये सिस्टम में सेव रहेंगी)
+const validKeys = [
+    "AWY-101X", "AWY-102Y", "AWY-103Z", "AWY-104A", "AWY-105B",
+    "AWY-106C", "AWY-107D", "AWY-108E", "AWY-109F", "AWY-110G",
+    "AWY-111H", "AWY-112I", "AWY-113J", "AWY-114K", "AWY-115L",
+    "AWY-116M", "AWY-117N", "AWY-118O", "AWY-119P", "AWY-120Q",
+    "AWY-121R", "AWY-122S", "AWY-123T", "AWY-124U", "AWY-125V",
+    "AWY-126W", "AWY-127X", "AWY-128Y", "AWY-129Z", "AWY-130A",
+    "AWY-131B", "AWY-132C", "AWY-133D", "AWY-134E", "AWY-135F",
+    "AWY-136G", "AWY-137H", "AWY-138I", "AWY-139J", "AWY-140K",
+    "AWY-141L", "AWY-142M", "AWY-143N", "AWY-144O", "AWY-145P",
+    "AWY-146Q", "AWY-147R", "AWY-148S", "AWY-149T", "AWY-150U"
+];
+
+// YouTube URL से Video ID निकालने का फंक्शन
+function extractVideoID(url) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
 }
 
-body {
-    background-color: #0f0f0f;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
+// वीडियो लोड करने का फंक्शन
+function loadVideo() {
+    const url = document.getElementById('youtube-url').value;
+    const videoID = extractVideoID(url);
+    const videoContainer = document.getElementById('video-container');
+    const ytPlayer = document.getElementById('yt-player');
+    const statusMsg = document.getElementById('status-message');
+
+    if (videoID) {
+        ytPlayer.src = `https://www.youtube.com/embed/${videoID}`;
+        videoContainer.classList.remove('hidden');
+        statusMsg.innerText = ""; // पुराना मैसेज क्लियर करें
+    } else {
+        alert("कृपया सही YouTube लिंक दर्ज करें!");
+    }
 }
 
-.container {
-    background-color: #1e1e1e;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    max-width: 600px;
-    width: 100%;
-    text-align: center;
-}
+// एक्टिवेशन की चेक करने का फंक्शन
+function activatePromotion() {
+    const inputKey = document.getElementById('activation-key').value.trim().toUpperCase();
+    const statusMsg = document.getElementById('status-message');
+    
+    if (inputKey === "") {
+        alert("कृपया पहले Activation Key दर्ज करें!");
+        return;
+    }
 
-h1 {
-    font-size: 2.5em;
-    margin-bottom: 5px;
-}
+    // LocalStorage से चेक करें कि क्या की पहले यूज़ हो चुकी है
+    let usedKeys = JSON.parse(localStorage.getItem('alterweb_used_keys')) || [];
 
-h1 span {
-    color: #ff0000;
-}
-
-.subtitle {
-    color: #aaaaaa;
-    margin-bottom: 30px;
-}
-
-.input-section {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-input[type="text"] {
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #333;
-    background-color: #2a2a2a;
-    color: white;
-    font-size: 16px;
-    outline: none;
-}
-
-input[type="text"]:focus {
-    border-color: #ff0000;
-}
-
-button {
-    padding: 15px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.btn-primary {
-    background-color: #ff0000;
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: #cc0000;
-}
-
-.hidden {
-    display: none;
-}
-
-#video-container {
-    margin-top: 20px;
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-iframe {
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-.activation-section h3 {
-    margin-bottom: 15px;
-    font-size: 1.2em;
-}
-
-.btn-whatsapp {
-    display: inline-block;
-    background-color: #25D366;
-    color: white;
-    text-decoration: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    width: 100%;
-}
-
-.btn-whatsapp:hover {
-    background-color: #1ebe57;
-}
-
-.key-input-box {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.btn-success {
-    background-color: #007bff;
-    color: white;
-}
-
-.btn-success:hover {
-    background-color: #0056b3;
-}
-
-#status-message {
-    margin-top: 15px;
-    font-weight: bold;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    if (usedKeys.includes(inputKey)) {
+        statusMsg.style.color = "#ff4444";
+        statusMsg.innerText = "❌ यह Key पहले ही इस्तेमाल हो चुकी है (Expired)!";
+    } 
+    else if (validKeys.includes(inputKey)) {
+        // की सही है, इसे used list में डाल दो
+        usedKeys.push(inputKey);
+        localStorage.setItem('alterweb_used_keys', JSON.stringify(usedKeys));
+        
+        statusMsg.style.color = "#00C851";
+        statusMsg.innerText = "✅ Payment Successful! आपका वीडियो प्रमोशन शुरू हो गया है।";
+        
+        // एक्टिवेट होने के बाद इनपुट बॉक्स खाली कर दें
+        document.getElementById('activation-key').value = "";
+    } 
+    else {
+        statusMsg.style.color = "#ff4444";
+        statusMsg.innerText = "❌ अमान्य Key (Invalid)! कृपया सही Key दर्ज करें।";
+    }
 }
