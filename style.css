@@ -1,99 +1,140 @@
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background-color: #121212;
+    background-color: #0f0f0f;
     color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    padding: 20px;
 }
 
 .container {
     background-color: #1e1e1e;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    max-width: 600px;
     width: 100%;
-    max-width: 400px;
+    text-align: center;
 }
 
 h1 {
-    color: #ff0000;
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-p {
-    text-align: center;
-    color: #aaaaaa;
-    margin-bottom: 25px;
-    font-size: 14px;
-}
-
-.input-group {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: #dddddd;
-}
-
-input[type="url"], select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #333;
-    border-radius: 5px;
-    background-color: #2a2a2a;
-    color: #fff;
-    outline: none;
-}
-
-input[type="url"]:focus, select:focus {
-    border-color: #ff0000;
-}
-
-.plan-card {
-    border: 2px solid #ff0000;
-    border-radius: 5px;
-    padding: 15px;
-    text-align: center;
-    background-color: rgba(255, 0, 0, 0.1);
-    cursor: pointer;
-}
-
-.plan-card h3 {
+    font-size: 2.5em;
     margin-bottom: 5px;
 }
 
-.plan-card .price {
-    font-size: 20px;
-    font-weight: bold;
+h1 span {
     color: #ff0000;
 }
 
-.pay-btn {
-    width: 100%;
+.subtitle {
+    color: #aaaaaa;
+    margin-bottom: 30px;
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+input[type="text"] {
     padding: 15px;
-    background-color: #ff0000;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background-color: #2a2a2a;
     color: white;
+    font-size: 16px;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-color: #ff0000;
+}
+
+button {
+    padding: 15px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
 }
 
-.pay-btn:hover {
+.btn-primary {
+    background-color: #ff0000;
+    color: white;
+}
+
+.btn-primary:hover {
     background-color: #cc0000;
+}
+
+.hidden {
+    display: none;
+}
+
+#video-container {
+    margin-top: 20px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+iframe {
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.activation-section h3 {
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.btn-whatsapp {
+    display: inline-block;
+    background-color: #25D366;
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.btn-whatsapp:hover {
+    background-color: #1ebe57;
+}
+
+.key-input-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-success {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #0056b3;
+}
+
+#status-message {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
